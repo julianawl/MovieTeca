@@ -12,7 +12,7 @@ import com.bumptech.glide.load.resource.bitmap.CenterCrop
 
 class MoviesAdapter (
     private var movies: MutableList<Movie>,
-    private val onMovieClick: (movie: Movie) -> Unit
+    var onMovieClick: (movie: Movie) -> Unit
         ) : RecyclerView.Adapter<MoviesAdapter.MovieViewHolder>(){
     override fun onCreateViewHolder(
         parent: ViewGroup,
