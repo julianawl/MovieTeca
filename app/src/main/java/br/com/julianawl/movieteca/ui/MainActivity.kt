@@ -40,4 +40,6 @@ class MainActivity : AppCompatActivity() {
         intent.putExtra(MOVIE_OVERVIEW, movie.overview)
         startActivity(intent)
     }
+
+
 }

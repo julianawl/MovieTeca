@@ -1,31 +1,28 @@
 package br.com.julianawl.movieteca.api
 
+import androidx.lifecycle.LiveData
+import br.com.julianawl.movieteca.Category
 import br.com.julianawl.movieteca.data.GetMoviesResponse
 import br.com.julianawl.movieteca.data.Movie
+import br.com.julianawl.movieteca.database.MovieDAO
+import br.com.julianawl.movieteca.ui.MainActivity
+import br.com.julianawl.movieteca.ui.fragments.MoviesListFragment
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
 
-object MoviesRepository {
+class MoviesRepository(
+    private val dao: MovieDAO,
     private val api: Api
+) {
 
-    init {
-        val retrofit = Retrofit.Builder()
-            .baseUrl("https://api.themoviedb.org/3/")
-            .addConverterFactory(GsonConverterFactory.create())
-            .build()
-
-        api = retrofit.create(Api::class.java)
-    }
+    private val onError = MoviesListFragment().onError()
 
     fun getMovies(
-        page: Int = 1,
         category: String,
-        onSuccess: (movies: List<Movie>) -> Unit,
-        onError: () -> Unit){
-        api.getPopularMovies(category = category, page = page)
+        page: Int = 1,
+        ) :LiveData<List<Movie>>{
+        api.getMovies(category = category, page = page)
             .enqueue(object : Callback<GetMoviesResponse> {
                 override fun onResponse(
                     call: Call<GetMoviesResponse>,
@@ -33,22 +30,25 @@ object MoviesRepository {
                 ) {
                     if (response.isSuccessful) {
                         val responseBody = response.body()
-
                         if (responseBody != null) {
-                            onSuccess.invoke(responseBody.movies)
+                            MoviesListFragment().onSuccess(category,
+                                responseBody.movies)
+
                         } else {
-                            onError.invoke()
+                            onError
                         }
                     } else {
-                        onError.invoke()
+                        onError
                     }
                 }
 
                 override fun onFailure(call: Call<GetMoviesResponse>, t: Throwable) {
-                    onError.invoke()
+                    onError
                 }
 
             })
+        return dao.getMovies(category,page)
     }
+
 
 }
