@@ -1,7 +1,9 @@
 package br.com.julianawl.movieteca.api
 
+import br.com.julianawl.movieteca.Category
 import br.com.julianawl.movieteca.data.GetMoviesResponse
 import retrofit2.Call
+import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query
@@ -10,8 +12,8 @@ interface Api {
 
     @GET("movies/{category}")
     fun getMovies(
-        @Path("category") category: String,
+        @Path("category") category: Category,
         @Query("page") page: Int,
-    ): Call<GetMoviesResponse>
+    ): Response<GetMoviesResponse>
 
 }
