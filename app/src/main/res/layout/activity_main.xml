@@ -30,7 +30,7 @@
             android:textColor="@android:color/secondary_text_dark" />
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/popular_movies_list"
+            android:id="@+id/popular_movies"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
@@ -60,7 +60,7 @@
             android:textColor="@android:color/secondary_text_dark" />
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/top_rated_list"
+            android:id="@+id/top_rated_movies"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
@@ -90,7 +90,7 @@
             android:textColor="@android:color/secondary_text_dark" />
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/upcoming_list"
+            android:id="@+id/upcoming_movies"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"

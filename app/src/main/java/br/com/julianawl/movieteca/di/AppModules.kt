@@ -4,8 +4,8 @@ import androidx.room.Room
 import br.com.julianawl.movieteca.api.MoviesRepository
 import br.com.julianawl.movieteca.database.AppDatabase
 import br.com.julianawl.movieteca.database.MovieDAO
+import br.com.julianawl.movieteca.ui.MainActivity
 import br.com.julianawl.movieteca.ui.MoviesAdapter
-import br.com.julianawl.movieteca.ui.fragments.MoviesListFragment
 import br.com.julianawl.movieteca.ui.viewmodel.MoviesViewModel
 import org.koin.android.viewmodel.dsl.viewModel
 import org.koin.dsl.module
@@ -28,8 +28,8 @@ val daoModule = module {
 }
 
 val uiModule = module {
-    factory<MoviesListFragment> { MoviesListFragment() }
-    factory<MoviesAdapter> { MoviesAdapter(get(),get(),get()) }
+    factory<MainActivity> { MainActivity() }
+    factory<MoviesAdapter> { MoviesAdapter(get(),get()) }
 }
 
 val viewModelModule = module {

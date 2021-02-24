@@ -1,6 +1,5 @@
 package br.com.julianawl.movieteca.ui
 
-import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,7 +11,6 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.CenterCrop
 
 class MoviesAdapter (
-    private val context: Context,
     private val movies: MutableList<Movie> = mutableListOf(),
     var onMovieClick: (movie: Movie) -> Unit
         ) : RecyclerView.Adapter<MoviesAdapter.MovieViewHolder>(){
