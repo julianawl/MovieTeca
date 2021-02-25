@@ -13,5 +13,5 @@ interface MovieDAO {
     fun getMovies(category: String, page: Int): LiveData<List<Movie>>
 
     @Insert
-    fun update(): LiveData<List<Movie>>
+    fun update(movies: List<Movie>): LiveData<List<Movie>>
 }

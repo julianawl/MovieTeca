@@ -1,5 +1,6 @@
 package br.com.julianawl.movieteca.api
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
 import br.com.julianawl.movieteca.api.Resource
@@ -18,49 +19,21 @@ class MoviesRepository(
     private val dao: MovieDAO,
     private val api: Api = AppRetrofit().movieService
 ) {
+    private val _items = MutableLiveData<List<Movie>>()
+    val items : LiveData<List<Movie>>
+    get() = _items
 
-    private val mediador = MediatorLiveData<Resource<List<Movie>?>>()
-
-    fun getMovies(
+    suspend fun getMovies(
         category: String,
-        page: Int): MediatorLiveData<Resource<List<Movie>?>> {
-
-        mediador.addSource(dao.getMovies(category, page)){
-            mediador.value = Resource(dado = it)
-        }
-
-        val fails = MutableLiveData<Resource<List<Movie>?>>()
-        mediador.addSource(fails){ failResource ->
-            val resourceAtual = mediador.value
-            val newResource : Resource<List<Movie>?> =
-                if (resourceAtual != null){
-                    Resource(dado = resourceAtual.dado, erro = failResource.erro)
-                }else{
-                    failResource
+        page: Int = 1
+    ) :LiveData<List<Movie>>{
+            val movies = api.getMovies(category,page)
+            if(movies.isSuccessful) {
+                withContext(Dispatchers.Main) {
+                    _items.value = movies.body()
                 }
-            mediador.value = newResource
-        }
-
-        api.getMovies(category = category, page = page)
-            .enqueue(object : Callback<GetMoviesResponse> {
-                override fun onResponse(
-                    call: Call<GetMoviesResponse>, response: Response<GetMoviesResponse>
-                ) {
-                    if (response.isSuccessful && response.body() != null) {
-                        val responseBody = response.body()
-                        responseBody?.let {
-
-                        }
-                    } else {
-                        
-                    }
-                }
-
-                override fun onFailure(call: Call<GetMoviesResponse>, t: Throwable) {
-                    //onError.invoke()
-                }
-            })
-        return mediador
+            }
+        return items
     }
 
 }

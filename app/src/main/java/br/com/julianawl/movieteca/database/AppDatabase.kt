@@ -7,6 +7,6 @@ import br.com.julianawl.movieteca.data.Movie
 @Database(entities = [Movie::class], version = 1, exportSchema = false)
 abstract class AppDatabase : RoomDatabase() {
 
-    abstract fun movieDao(): MovieDAO
+    abstract val movieDao: MovieDAO
 
 }
